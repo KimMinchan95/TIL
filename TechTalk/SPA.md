@@ -32,6 +32,7 @@
 > 
 - 하나의 페이지로 구성된 어플리케이션
 - 클라이언트 사이드 렌더링을 사용
+![spa](https://user-images.githubusercontent.com/83770790/175954659-b822cd90-dd78-4563-9ece-1ceba76bfbb5.png)
 
 ## CSR
 
