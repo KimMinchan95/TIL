@@ -1,14 +1,12 @@
 ## 1. React.Fragment란?
 
-> 원래 모양
-> 
+#### Fragment
 
 ```html
 <React.Fragment></React.Fragment>
 ```
 
-> 대체 가능
-> 
+#### 대체 가능 
 
 ```html
 <></>
