@@ -26,6 +26,9 @@
 
 함수 컴포넌트 안에서 **state**를 사용할 수 있다.
 
+![useState](https://user-images.githubusercontent.com/83770790/176689184-7edae2a9-a815-4d35-81aa-21398676b52c.jpg)
+
+
 ### 3. Hooks 종류 - useEffect
 
 함수 컴포넌트 안에서 **side effect**를 수행할 수 있게한다.
@@ -35,11 +38,16 @@
 > 
 - Class의 **Lifecycle**와 유사한 기능
 
+![useEffect](https://user-images.githubusercontent.com/83770790/176689210-8d8de87f-e422-4ed2-9bef-84d63fda20bf.jpg)
+
+
 - `useEffect`가 클래스형 컴포넌트에 있는 모든 생명 주기를 표현할 수는 없음
     - getDerivedStateFromError
     - componentDidCatch
 
 등은 `useEffect`로 나타낼 수 없다.
+
+![useEffect2](https://user-images.githubusercontent.com/83770790/176689231-0880126b-d226-4ecd-83fb-8c39a968d03d.jpg)
 
 ### 3. Hooks 규칙
 
