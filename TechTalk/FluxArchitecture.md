@@ -15,7 +15,8 @@
 - 이 양방향 데이터 바인딩을 해결하기 위해 데이터가 단 방향으로  흐르는 디자인 패턴을 만들었다.
 - 이것이 바로 **Flux Architecture**다.
 
-![Flux Architecture.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6e5bccaf-da3b-4934-b446-f235e58e1ccc/Flux_Architecture.png)
+![Flux Architecture](https://user-images.githubusercontent.com/83770790/179978720-7dcbca88-d0c1-4bdf-8bde-6a9ff4b056d4.png)
+
 
 ## Flux의 핵심 컨셉과 개념들
 
