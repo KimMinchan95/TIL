@@ -24,7 +24,8 @@
     - 이벤트가 발생하게 되면 우리가 지정한 어떤 작업이 수행되는 방식을 말한다.
 - Single Thread를 효율적으로 사용하는 Event Loop 방식 채택
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d7b943c3-15fb-4753-9fbd-c8732346feeb/Untitled.png)
+![Event Loop](https://user-images.githubusercontent.com/83770790/180446845-b7342eca-dbfa-4d41-acb4-569ce539ec8f.png)
+
 
 - 위에서 부터 실행이 되고, 각 단계는 큐와 비슷한 구조로 이루어져 있다.
     - 각 단계들 마다 특정 시간을 할당해서 그 시간만큼 작업을 처리하는 라운드 로빈방식으로 처리한다.
@@ -75,7 +76,8 @@
 
 - 여기서의 Callback들은 Event Loop로 간다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0f514ee9-7181-4e79-8a49-7fece163a7ad/Untitled.png)
+![Node js 엔진](https://user-images.githubusercontent.com/83770790/180446859-127e665e-3e11-4060-a86c-0a69254e0246.png)
+
 
 **위의 사진은 Node.js의 내부구조이다**
 
@@ -83,7 +85,8 @@
 - libuv
     - Node에 포함되어서 각종 비동기 작업들을 포함해서 다양한 작업을 수행하는 C 기반의 라이브러리이다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/176d863d-d819-447f-b49c-051b9c597405/Untitled.png)
+![libuv](https://user-images.githubusercontent.com/83770790/180446873-54346ab0-909b-4e87-8bc6-def12afeacd9.png)
+
 
 - 기본적인 I/O에 대한 API와 기타 작업을 위한 자체 쓰레드 풀을 가지고 있다.
     - 기본적으로 네 개의 쓰레드를 쓰레드 풀에 할당한다.
