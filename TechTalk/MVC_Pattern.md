@@ -86,7 +86,7 @@ Cocoa MVC(Apple MVC)
 
 **이를 극복하기 위해 현대에는 5 가지 계층으로 나눈다.**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/90b17470-d9af-4858-bb8d-f7b7c516e4d6/Untitled.png)
+![5Layer](https://user-images.githubusercontent.com/83770790/181011314-9278668f-4aa8-4e6e-8883-750a2738110d.png)
 
 - Presentation Layer - View와 동일
 - Control Layer - Controller와 동일
