@@ -2,9 +2,9 @@
 
 [놀라운 스택과 큐의 차이](https://www.youtube.com/watch?v=OeCdHoJa-X0)
 
-#![stack queue](https://user-images.githubusercontent.com/83770790/182151587-98413700-8b91-4aa9-a9bd-3d0db1e69167.png)
+![stack queue](https://user-images.githubusercontent.com/83770790/182151587-98413700-8b91-4aa9-a9bd-3d0db1e69167.png)
 
-# 스택(Stack)
+## 스택(Stack)
 
 > 스택은 가장 마지막으로 들어간 데이터가 가장 첫 번째로 나오는 성질(LIFO, Last In First Out)을 가진 자료 구조이다.
 > 
