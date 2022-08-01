@@ -80,7 +80,7 @@ queue.dequeue(); // 1
 
 **사진**
 
-[](https://data-flair.training/blogs/stacks-and-queues-in-c/)
+[Stack&Queue](https://data-flair.training/blogs/stacks-and-queues-in-c/)
 
 **코드 예시**
 
