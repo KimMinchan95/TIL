@@ -39,8 +39,8 @@
 
 > `<script>` 태그의 `defer` 속성을 넣으면 `<body>` 태그 최하단에 `<script>`를 넣는 것은 더 이상 필수가 아니다.
 > 
-
-![defer.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ab54606d-c04b-4da5-91e0-f7a0f8aec231/defer.png)
+  
+![defer](https://user-images.githubusercontent.com/83770790/184560141-497736d0-95c8-444e-b897-c7c9f1410ec3.png)
 
 - `defer` 속성은 HTML 파싱도중 `<script>`태그를 만나면 HTML 파싱하는 동시에 `<script>`를 다운로드 한다.
 - 그리고 HTML파싱이 완료되고 나서야 `<script>`를 실행시킨다.
