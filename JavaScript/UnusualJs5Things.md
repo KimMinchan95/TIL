@@ -91,7 +91,7 @@ const obj = {
 	true: false,
 };
 
-for (const key in obj({
+for (const key in obj){
 	console.log(key)
 }
 
