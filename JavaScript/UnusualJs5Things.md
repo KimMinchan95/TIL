@@ -26,7 +26,7 @@ console.log(a); // {}
 (function func(){})();
 ```
 
-1. 소괄호로 한번 더 묶는 방식
+2. 소괄호로 한번 더 묶는 방식
 
 ```jsx
 (function func(){}());
