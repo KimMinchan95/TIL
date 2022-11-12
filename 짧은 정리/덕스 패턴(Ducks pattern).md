@@ -15,8 +15,8 @@
 
 ### 덕스 패턴의 규칙
 
-1. MUST export default a function called reducer()
-**반드시** 리듀소 함수를 default export 해야 한다.
+1. MUST export default a function called reducer
+**반드시** 리듀서 함수를 default export 해야 한다.
 2. MUST export its action creators as functions
 **반드시** 액션 생성 함수를 export 해야 한다.
 3. MUST have action type in form npm-module-or-app/reducer/ACTION_TYPE
