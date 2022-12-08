@@ -55,7 +55,7 @@ export default App;
 
 ```jsx
 // useInput.js
-import { useStat } from 'react';
+import { useState } from 'react';
 
 export function useInput(initialValue, submitAction) {
 	const [inputValue, setInputValue] = useState(initialValue);
