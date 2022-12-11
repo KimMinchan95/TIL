@@ -1,4 +1,4 @@
 # TIL
 Organize what I learned today
 
-Create this repo to record I learn
+Create this repo created to record I learn
