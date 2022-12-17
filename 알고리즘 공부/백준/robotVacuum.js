@@ -7,8 +7,7 @@ const tranformData = data => data.split(' ').map(Number);
 const direction = [[-1, 0], [0, 1], [1, 0], [0, -1]];
 
 const solution = () => {
-    const [areaSize, inital, ...area] = input.map(tranformData);
-    const [N, M] = areaSize;
+    const [_, inital, ...area] = input.map(tranformData);
     
     let count = 0;
     const getCleaning = (location) => {
@@ -42,7 +41,7 @@ const solution = () => {
             const [backR, backC] = [r + bR, c + bC];
 
             // 뒤가 벽일 경우 멈추기
-            if (backC <= 0 || backC >= M || backR <= 0 || backR >= N || area[backR][backC] === 1) {
+            if (area[backR][backC] === 1) {
                 break;
             }
 
