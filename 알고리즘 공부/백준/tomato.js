@@ -46,7 +46,7 @@ class Queue {
             this.front.prev = null;
         }
         this.size--;
-        return node;
+        return node.item;
     }
 }
 
@@ -83,7 +83,7 @@ const solution = () => {
     }
 
     while (queue.size) {
-        const [h, n, m, count] = queue.dequeue().item;
+        const [h, n, m, count] = queue.dequeue();
         directions.forEach(direction => {
                 const [dh, dn, dm] = direction;
             const [nh, nn, nm] = [h + dh, n + dn, m + dm];
