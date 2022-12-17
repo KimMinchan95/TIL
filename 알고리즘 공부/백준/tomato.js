@@ -25,12 +25,12 @@ class Queue {
 
     enqueue(item) {
         const node = new Node(item);
-        if (!this.size) {
-            this.front = node;
-            this.rear = node;
-        } else {
+        if (this.size) {
             this.rear.next = node;
             node.prev = this.rear;
+            this.rear = node;
+        } else {
+            this.front = node;
             this.rear = node;
         }
         this.size++;
