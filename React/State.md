@@ -1,6 +1,6 @@
 # State
 
-[https://www.youtube.com/watch?v=NpTizz_qgtA](https://www.youtube.com/watch?v=NpTizz_qgtA)
+[[10분 테코톡] 무비의 React의 state](https://www.youtube.com/watch?v=NpTizz_qgtA)
 
 ## React에서 State란?
 
