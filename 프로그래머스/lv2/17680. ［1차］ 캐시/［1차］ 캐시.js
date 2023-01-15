@@ -1,10 +1,6 @@
 function solution(cacheSize, cities) {
-    const caches = new Map();
-    
-    let count = 0;
-    
-    cities.forEach(current => {
-        const city = current.toLowerCase();
+    return cities.reduce(({count, caches}, cur) => {
+        const city = cur.toLowerCase();
         
         const hit = caches.has(city);
         
@@ -30,7 +26,10 @@ function solution(cacheSize, cities) {
         caches.forEach((value, key) => {
            caches.set(key, value + 1); 
         });
-    });
-    
-    return count;
+        
+        return {count, caches};
+    }, {
+        count: 0,
+        caches: new Map(),
+    }).count;
 }
