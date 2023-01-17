@@ -1,7 +1,7 @@
 const score = {
-    S: 1,
-    D: 2,
-    T: 3,
+    'S': 1,
+    'D': 2,
+    'T': 3,
 }
 
 const option = {
@@ -11,9 +11,7 @@ const option = {
 
 function solution(dartResult) {
     let result = 0;
-    
     let before = 0;
-    
     let isContinue = false;
     
     const calculation = [...dartResult].reduce((acc, cur, i) => {
