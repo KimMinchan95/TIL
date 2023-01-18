@@ -1,5 +1,3 @@
 function solution(box, n) {
-    return box.reduce((acc, cur) => {
-        return acc * Math.floor(cur / n)  
-    }, 1);
+    return box.reduce((acc, cur) => acc * Math.floor(cur / n), 1);
 }
