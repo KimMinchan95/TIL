@@ -1,20 +1,14 @@
 function solution(rsp) {
     return [...rsp].map(cur => {
-        let result = '';
         switch (cur) {
             case '2':
-                result = '0';
-                break;
+                return '0';
             case '0':
-                result = '5';
-                break;
+                return '5';
             case '5':
-                result = '2';
-                break;
+                return '2';
             default:
-                result ='';
+                return '';
         }
-        
-        return result;
     }).join('');
 }
