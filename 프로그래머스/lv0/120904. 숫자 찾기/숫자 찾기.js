@@ -1,4 +1,3 @@
 function solution(num, k) {
-    const idx = [...num.toString()].findIndex(cur => cur === k.toString());
-    return idx === -1 ? -1 : idx + 1;
+    return String(num).indexOf(String(k)) + 1 || -1;
 }
