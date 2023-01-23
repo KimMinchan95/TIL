@@ -1,17 +1,10 @@
 function solution(A, B) {
-    let result = -1;
-    let memo = A;
+    if (A === B) return 0;
     
-    if (memo === B) return 0;
-    
-    for (let i = 0; i < A.length; i++) {
-        const last = memo[memo.length - 1];
-        memo = last + memo.slice(0, -1);
-        if (memo === B) {
-            result = i + 1;
-            break;
-        }
+    for (let i = 1; i < A.length; i++) {
+        A = A.slice(-1) + A.slice(0, -1);
+        if (A === B) return i;
     }
     
-    return result;
+    return -1;
 }
