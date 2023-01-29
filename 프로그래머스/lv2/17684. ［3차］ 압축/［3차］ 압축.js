@@ -1,17 +1,11 @@
-const list = [];
+const words = {};
 
 for (let i = 65; i <= 98; i++) {
-    list.push(String.fromCharCode(i));
+    words[String.fromCharCode(i)] = i - 64;
 }
 
 function solution(msg) {
     const result = [];
-    
-    const words = list.reduce((acc, word, idx) => {
-        acc[word] = idx + 1;
-        
-        return acc;
-    }, {});
     
     const last = [...msg].reduce(({prevWords, pointer}, word) => {
         let curWords = prevWords + word;
