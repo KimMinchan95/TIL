@@ -1,10 +1,14 @@
-const list = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+const list = [];
+
+for (let i = 65; i <= 98; i++) {
+    list.push(String.fromCharCode(i));
+}
 
 function solution(msg) {
     const result = [];
     
     const words = list.reduce((acc, word, idx) => {
-        acc[word] = idx;
+        acc[word] = idx + 1;
         
         return acc;
     }, {});
