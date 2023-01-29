@@ -16,7 +16,7 @@ function solution(cacheSize, cities) {
 
             if (caches.size > cacheSize) {
                 let LRU = ['', -1];
-                for (let cache of caches.entries()) {
+                for (const cache of caches.entries()) {
                     LRU = cache[1] > LRU[1] ? cache : LRU;
                 }
                 caches.delete(LRU[0]);
