@@ -1,3 +1,8 @@
+const states = {
+    'Enter': '들어왔습니다.',
+    'Leave': '나갔습니다.'
+}
+
 function solution(record) {
     const result = [];    
     const map = new Map();
@@ -12,5 +17,5 @@ function solution(record) {
         map.set(id, name);
     });
 
-    return result.map(({id, state}) => `${map.get(id)}님이 ${state === 'Enter' ? '들어왔습니다.' : '나갔습니다.'}`);
+    return result.map(({id, state}) => `${map.get(id)}님이 ${states[state]}`);
 }
