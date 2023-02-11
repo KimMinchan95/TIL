@@ -1,6 +1,7 @@
 # Callback
 
 [[10분 테코톡] 🔥 유조의 Callback](https://www.youtube.com/watch?v=wvEYG6ydAGg&list=PLkfxusmKmLsNDGmER2tmrslpPOTfKhE7j&index=85&t=504s)
+[자바스크립트 - Callback functions 콜백함수란? - 별코딩](https://youtu.be/8FhRtDUhp1Q)
 
 ## 1. 동기와 비동기
 
@@ -34,7 +35,10 @@ console.log('2');
 
 ## 2. Callback
 
-- Callback은 되돌아 와서 호출하라는 의미
+- 어떤 함수에 인자로 전달되는 함수
+- Callback은 되돌아와서 호출하라는 의미
+	- 나중에 불려진다.
+- 비동기적인 동작이 들어있을 때 함수를 원하는 순서대로 동작하게 하기 위해 사용한다.
 
 ```jsx
 const arr = ['1', '2', '3'];
