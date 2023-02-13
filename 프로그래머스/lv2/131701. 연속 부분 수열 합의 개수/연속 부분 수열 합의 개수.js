@@ -3,14 +3,10 @@ function solution(elements) {
     
     const dobuleElements = elements.concat(elements);
     
-    for (let pick = 1; pick <= elements.length; pick++) {
-        for (let i = 0; i < elements.length; i++) {
-            let sum = 0;
-            
-            for (let j = i; j < pick + i; j++) {
-                sum += dobuleElements[j];
-            }
-            
+    for (let i = 0; i < elements.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < elements.length; j++) {
+            sum += dobuleElements[i + j];
             set.add(sum);
         }
     }
