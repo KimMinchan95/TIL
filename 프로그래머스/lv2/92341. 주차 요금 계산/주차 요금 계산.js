@@ -12,19 +12,12 @@ function solution(fees, records) {
         
         const lastParking = map.get(licensePlate);
     
-        if (state === 'IN') {
-            map.set(licensePlate, {
-                time: convertedTime,
-                state,
-                parkingTime: lastParking?.parkingTime ? lastParking.parkingTime : 0,
-            });
-        } else {
-            map.set(licensePlate, {
-                time: convertedTime,
-                state,
-                parkingTime: lastParking.parkingTime + convertedTime - lastParking.time,
-            });
-        }
+        map.set(licensePlate, {
+            time: convertedTime,
+            state,
+            // IN 이면서 처음들어왔으면 0을 넣는다. IN 이면서 재 방문이면 누적 주차시간을 넣는다. 나갈때는 누적시간 + 현재시간 - 마지막 출입시간으로 누적시간을 업데이트 한다.
+            parkingTime: state === 'IN' ? lastParking?.parkingTime ? lastParking.parkingTime : 0 : lastParking.parkingTime + convertedTime - lastParking.time,
+        });
     });
 
     return [...map].sort((first, second) => first[0] - second[0]).map(([_, {time, state, parkingTime}]) => {
