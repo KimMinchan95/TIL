@@ -49,7 +49,7 @@ typeof hi // "undefined"
 ```
 
 - **Array**
-    - object와 array를 `typeof`로 구별하지 못한다. 둘다 "object"가 반환되기 때문이다.
+    - object와 array를 `typeof`로 구별하지 못한다. 둘다 `"object"`가 반환되기 때문이다.
     - 구별을 위해서는 [Array.isArray()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray) 메서드를 사용해야 한다.
 
 ---

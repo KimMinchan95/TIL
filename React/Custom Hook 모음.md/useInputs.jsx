@@ -1,3 +1,4 @@
+// useInputs.jsx
 import { useState, useCallback } from 'react';
 
 function useInputs(initialForm) {
