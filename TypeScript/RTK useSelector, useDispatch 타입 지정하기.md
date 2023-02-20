@@ -56,6 +56,7 @@ type DispatchFunc = () => AppDispatch;
 export const useAppDispatch: DispatchFunc = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 ```
+- `TypedUseSelectorHook`는 react-redux v7.1.3에서 업데이트 되었다.
 
 이렇게 작성해 놓고 `useDispatch`와 `useSelector` 대신 import 해서 사용하면 사용할 때마다 Type을 지정하는 번거로움이 사라진다.
 
