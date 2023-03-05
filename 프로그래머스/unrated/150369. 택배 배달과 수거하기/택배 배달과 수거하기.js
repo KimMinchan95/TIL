@@ -8,13 +8,10 @@ function solution(cap, n, deliveries, pickups) {
             result += 2 * (i + 1);
         }
         
-        if (deliveries[i] < 0) {
-            deliveries[i - 1] += deliveries[i];
-        }
-        
-        if (pickups[i] < 0) {
-            pickups[i - 1] += pickups[i];
-        }
+        // 이전에 트럭 칸이 남아있었으면 수거해감
+        deliveries[i - 1] += deliveries[i];
+
+        pickups[i - 1] += pickups[i];
     }
     
     return result;
