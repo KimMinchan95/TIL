@@ -13,13 +13,13 @@ const checkBTree = (binary, start, end) => {
 }
 
 function solution(numbers) {
-    const binaryArr = numbers.map(num => num.toString(2));
-    
-    return binaryArr.map(binary => {
+    return numbers.map(num => {
+        const binary = num.toString(2);
         const binaryLength = binary.length;
-        const nodeDeep = binaryLength.toString(2).length;
+        // 이진트리 깊이
+        const treeDeep = binaryLength.toString(2).length;
         
-        const zeroSet = '0'.repeat(2**nodeDeep - 1 - binaryLength);
+        const zeroSet = '0'.repeat(2**treeDeep - 1 - binaryLength);
         
         const bi_tree = zeroSet + binary;
         return checkBTree(bi_tree, 0, bi_tree.length - 1) ? 1 : 0;
