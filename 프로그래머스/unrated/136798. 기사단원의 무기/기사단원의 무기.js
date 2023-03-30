@@ -3,7 +3,7 @@ const caculateKnightPower = num => {
     
     for (let i = 1; i <= Math.sqrt(num); i++) {
         if (num % i === 0) {
-            if (num / i === i) {
+            if (i**2 === num) {
                 result += 1;
             } else {
                 result += 2;  
