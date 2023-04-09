@@ -6,7 +6,7 @@ function solution(new_id) {
     id = id.replace(/[^\w\-\_\.]/g, '');
     
     // 3 단계
-    id = id.replace(/\.{1,}/g, '.');
+    id = id.replace(/\.{2,}/g, '.');
     
     // 4 단계
     id = id.replace(/^\./, '');
