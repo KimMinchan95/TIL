@@ -4,11 +4,11 @@ function solution(m, n, board) {
     while (true) {
         const queue = [];
     
-        for (let c = 0; c < m - 1; c++) {
-            for (let r = 0; r < n - 1; r++) {
-                const friend = boards[c][r];
-                if (friend && friend === boards[c + 1][r] && friend === boards[c][r + 1] && friend === boards[c + 1][r + 1]) {
-                    queue.push([c, r]);
+        for (let r = 0; r < m - 1; r++) {
+            for (let c = 0; c < n - 1; c++) {
+                const friend = boards[r][c];
+                if (friend && friend === boards[r + 1][c] && friend === boards[r][c + 1] && friend === boards[r + 1][c + 1]) {
+                    queue.push([r, c]);
                 }
             }
         }
@@ -17,19 +17,19 @@ function solution(m, n, board) {
             return boards.flat().filter(board => !board).length;
         }
         
-        queue.forEach(([c, r]) => {
-            boards[c][r] = null;
-            boards[c + 1][r] = null;
-            boards[c][r + 1] = null;
-            boards[c + 1][r + 1] = null;
+        queue.forEach(([r, c]) => {
+            boards[r][c] = null;
+            boards[r + 1][c] = null;
+            boards[r][c + 1] = null;
+            boards[r + 1][c + 1] = null;
         });
         
-        for (let c = m - 1; c > 0; c--) {
-            for (let r = 0; r < n; r++) {
-                for (let h = c - 1; h >= 0; h--) {
-                    if (boards[h][r] && !boards[c][r]) {
-                        boards[c][r] = boards[h][r];
-                        boards[h][r] = null;
+        for (let r = m - 1; r > 0; r--) {
+            for (let c = 0; c < n; c++) {
+                for (let h = r - 1; h >= 0; h--) {
+                    if (boards[h][c] && !boards[r][c]) {
+                        boards[r][c] = boards[h][c];
+                        boards[h][c] = null;
                         break;
                     }
                 }
