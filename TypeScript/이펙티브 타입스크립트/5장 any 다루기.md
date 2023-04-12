@@ -38,6 +38,7 @@ function f1() {
 - 근본적인 원인을 해결한 것이 아니기 때문에 다른 곳에서 더 큰 문제가 발생할 수도 있다.
 
 <br />
+
 - 객체 안에 한 속성이 타입 오류를 가질 때는 객체 전체를 `any`로 단언하지 말고(다른 속성들도 타입 체크가 되지 않는다.) 최소한의 범위만 `any`를 사용하는 것이 좋다.
 
 ```ts
@@ -56,4 +57,38 @@ const config: Config = {
     key: value as any, // ⭕
   },
 };
+```
+
+#### 아이템 39 - any를 구체적으로 변형해서 사용하기
+
+- `any` 타입에는 모든 숫자, 문자열, 배열, 객체, 정규식, 함수 클래스, DOM 엘리먼트, `null` 이나 `undefined` 까지 아우르는 매우 큰 값이다.
+  - `any` 보다 더 구체적으로 표현할 수 있는 타입을 찾아 타입 안전성을 높이도록 해야한다.
+
+```ts
+function getLengthBad(array: any) {
+  // ❌
+  return array.legnth;
+}
+
+function getLength(array: any[]) {
+  return array.legnth; // ⭕
+}
+```
+
+- 위의 예제에서 `any[]`가 `any`보다 좋은 점
+
+  - 함수 내의 `array.length`타입이 체크된다.
+  - 함수의 반환 타입이 `any` 대신 `number`로 추론된다.
+  - 함수가 호출될 때 매개변수가 배열인지 체크한다.
+
+- 객체이긴 하지만 값을 알 수 없다면 `{[key: string]: any}`나 `object` 타입으로 선언해라.
+
+  - `object`타입은 객체의 키를 열거할 수는 있지만 속성에 접근할 수 없다.
+
+- 함수를 구체화 할 수 있는 방법 3가지
+
+```ts
+type Fn0 = () => any; // 매개변수 없이 호출 가능한 모든 함수
+type Fn1 = (arg: any) => any; // 매개변수 1개
+type FnN = (...args: any[]) => any; // 모든 개수의 매개변수 'Function' 타입과 동일
 ```
