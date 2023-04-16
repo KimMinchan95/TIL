@@ -97,3 +97,52 @@ type FnN = (...args: any[]) => any; // 모든 개수의 매개변수 'Function' 
 
 - 함수는 보통 외부로 드러난 타입 정의는 간단하지만 내부 로직이 복잡해서 안전한 타입으로 구현하기 어려운 경우가 많다.
 - 모든부분을 안전한 타입으로 구성하기 힘든 경우 내부에서는 타입 단언을 사용하고 외부로 드러나는 타입은 정의를 정확히 명시하는 정도로 끝내는 게 좋다.
+
+#### 아이템 41 - any의 진화 이해하기
+
+- 타입스크립트에서 일반적으로 변수의 타입은 변수를 선언할 때 결정된다.
+  - `any` 타입과 관련해서는 예외의 경우가 존재한다.
+- `any` 타입의 진화는 `noImplicitAny`가 설정된 상태에서 변수의 타입이 암시적 `any`인 경우에만 일어난다.
+- 명시적으로 `any`를 선언하면 `any` 타입이 그대로 유지된다.
+- 타입을 안전하게 지키기 위해서는 암시적 `any`를 진화시키는 방식보다 명시적 타입 구문을 사용하는 것이 좋다.
+
+```ts
+function range(start: nubmer, limit: number) {
+  const out = []; // type이 any[]
+  for (let i = start; i < limit; i++) {
+    out.push(i); // out의 type이 any[]
+  }
+  return out; // type이 number[]
+}
+```
+
+- `out`의 타입이 `any[]`로 선언되었지만 `number` 타입의 값이 들어가면서 `number[]`로 진화한다.
+
+```ts
+const result = []; // type이 any[]
+result.push('a');
+result; // type이 string[]
+result.push(1);
+result; // type이 (string | number)[]
+```
+
+<br/>
+
+- 조건문에서 분기에 따라 타입이 변할 수도 있다.
+
+```ts
+let val; // type이 any
+if (Math.random() < 0.5) {
+  val = /hello/;
+  val; // type이 RegExp
+} else {
+  val = 12;
+  val; // type이 number
+}
+val; // 타입이 number | RegExp
+```
+
+<br/>
+
+- 변수의 초깃값이 `null`인 경우도 `any`의 진화가 일어난다.
+  - 보통 try/catch 블록 안에서 변수를 할당하는 경우에 나타난다.
