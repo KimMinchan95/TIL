@@ -13,18 +13,17 @@ function solution(user_id, banned_id) {
             return;
         }
         
-        for (let i = 0; i < banList[0].length; i++) {
+        banList[0].forEach(pick => {
             const copiedBanList = [...banList];
             const copiedPickList = [...pickList];
             
-            const pick = banList[0][i];
-            if (copiedPickList.find(id => id === pick)) continue;
+            if (copiedPickList.find(id => id === pick)) return;
             
             copiedPickList.push(pick);
             copiedBanList.shift();
 
             handlePick(copiedBanList, copiedPickList);
-        }
+        });
     };
     
     handlePick(bannedIdList, []);
