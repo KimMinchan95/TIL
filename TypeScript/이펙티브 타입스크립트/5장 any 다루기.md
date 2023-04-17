@@ -146,3 +146,58 @@ val; // 타입이 number | RegExp
 
 - 변수의 초깃값이 `null`인 경우도 `any`의 진화가 일어난다.
   - 보통 try/catch 블록 안에서 변수를 할당하는 경우에 나타난다.
+
+#### 아이템 42 - 모르는 타입의 값에는 `any` 대신 `unknown`을 사용하기
+
+- 반환 타입을 any로 만드는 것 보다 타입을 원하는 곳에서 할당하는 것이 이상적이다.
+
+```ts
+function parseYAML(yaml: string): any {
+  //...
+}
+
+interface Book {
+  name: string;
+  author: string;
+}
+const book: Book = parseYAML(`
+  name: Wuthering Heights
+  author: Emily Bronte
+`);
+```
+
+- 함수의 반환값에 타입 선언을 강제할 수 없기 때문에, 호출한 곳에서 타입을 선언하게 되면 암시적 `any` 타입이되고, 암시적 `any` 타입이 되면, 사용하는 곳마다 타입 오류가 발생하게 된다.
+
+<br />
+
+- `parseYAML`이 `unknown` 타입을 반환하게 만드는 것이 더 안전하다.
+
+```ts
+function safeParseYAML(yaml: string): unknown {
+  return parseYAML(yaml);
+}
+const book = safeParseYAML(`
+  name: The Tenant of Wildfell Hall
+  author: Anne Bronte
+`);
+alert(book.title);
+// ~~~ 개체가 'unknwon' 형식입니다.
+book('read');
+// ~~~~~~ 개체가 'unknown' 형식입니다.
+```
+
+- `any` 타입의 특징
+  - 어떤 타입이든 `any` 타입에 할당 가능 하다.
+  - `any` 타입은 어떠한 타입으로도 할당 가능 하다.
+- `unknown` 타입의 특징
+  - 어떤 타입이든 `unknown`에 할당 가능 하다.
+  - `unknown`은 오직 `unknown`과 `any`에만 할당 가능 하다.
+- `never` 타입의 특징
+  - 어떤 타입도 `never`에 할당할 수 없다.
+  - 어떠한 타입으로도 할당 가능 하다.
+
+<br />
+
+- `object` 또는 `{}`를 사용하는 방식은 `unknown` 보다는 범위가 약간 좁다.
+  - `{}` 타입은 `null`과 `undefined`를 제외한 모든 값을 포함한다.
+  - `object` 타입은 `non-primitive` 타입으로 이루어져있고, 객체와 배열이 포함된다.(boolean, number, string 이 제외된다.)
