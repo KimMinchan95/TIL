@@ -276,3 +276,58 @@ interface MonkeyDocument extends Document {
 ```
 
 **몽키 패치를 남용해서는 안 되며 궁극적으로 더 잘 설계된 구조로 리팩터링하는 것이 좋다.**
+
+#### 아이템 44 - 타입 커버리지를 추적하여 타입 안정성 유지하기
+
+- `noImplicitAny`를 설정하고 모든 암시적 `any` 대신 명시적 타입 구문을 추가해도 `any` 타입은 두 가지 경우로 프로그램 내에 존재할 수 있다.
+
+1. 명시적 `any` 타입
+
+- `any` 타입의 범위를 좁히고 구체적으로 만들어도 여전히 `any` 타입이다.
+- `any[]`와 `{[key: string]: any}` 같은 타입은 인덱스를 생성하면 단순 `any`가 되고 코드 전반에 영향을 미친다.
+
+2. 서드파티 타입 선언
+
+- `@types` 선언 파일로부터 `any` 타입이 전파되기 때문에 특별히 조심해야 한다.
+
+**any가 등장하는 문제와 해결책**
+
+1. 상위 함수의 `any` 반환
+
+```ts
+function getColumnInfo(name: string): any {
+  return utils.builColumnInfo(appState.dataSchema, name); // any를 반환한다.
+}
+```
+
+- 이후 타입 정보를 추가하기 위해 `utils.buildColumnInfo`가 `any`대신 구체적인 타입을 반환하게 만들었다.
+- `getColumnInfo` 함수의 반환문에 있는 `any` 타입이 모든 타입 정보를 날리게 된다.
+- `getColumnInfo`에 남아 있는 `any`까지 제거해야 문제가 해결된다.
+
+<br />
+
+2. `import`한 심벌
+
+- `import`한 모든 심벌은 `any` 타입이다.
+- `import`한 값이 사용되는 곳마다 `any`타입을 양산하게 된다.
+
+```ts
+import { someMethod, someSymbol } from 'my-module'; // 정상
+
+const pt1 = {
+  x: 1,
+  y: 2,
+}; // type이 {x: number, y: number}
+const pt2 = someMethod(pt1, someSymbol); // 정상, pt2의 type이 any
+```
+
+3. 서드파티 라이브러리로부터 비롯되는 타입 버그
+
+- 함수가 유니온 타입을 반환하도록 선언하고 실제로는 유니온 타입보다 훨씬 특정된 값을 반환하는 경우.
+- 선언된 타입과 실제 반환된 타입이 맞지 않는다면 어쩔 수 없이 `any` 단언문을 사용해야 한다.
+- 라이브러리가 업데이트되어 함수 선언문이 제대로 수정된 후 `any`를 제거하거나, 직접 수정해서 커뮤니티에 공개해야 한다.
+
+4. `any` 타입이 사용되는 코드가 실제로는 더 이상 실행되지 않는 코드일 때
+
+- `npm`의 `type-cover-age` 패키지를 활용해서 `any`를 추적해라
+- 타입 커버리지를 추적하면 이러한 부분들을 쉽게 발견할 수 있다.
