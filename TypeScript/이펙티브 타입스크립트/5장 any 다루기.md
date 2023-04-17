@@ -201,3 +201,78 @@ book('read');
 - `object` 또는 `{}`를 사용하는 방식은 `unknown` 보다는 범위가 약간 좁다.
   - `{}` 타입은 `null`과 `undefined`를 제외한 모든 값을 포함한다.
   - `object` 타입은 `non-primitive` 타입으로 이루어져있고, 객체와 배열이 포함된다.(boolean, number, string 이 제외된다.)
+
+#### 아이템 42 - 몽키 패치보다는 안전한 타입을 사용하기
+
+> 몽키패치는 원래 소스코드를 변경하지 않고 실행 시 코드 기본 동작을 추가, 변경 또는 억제하는 기술이다. 쉽게 말해 어떤 기능을 위해 이미 있던 코드에 삽입하는 것이다. - [자바스크립트에서 몽키패치](https://donggov.tistory.com/211)
+
+- JS는 객체와 클래스에 임의의 속성을 추가할 수 있을 만큼 유연하다.
+- DOM 엘리먼트에 데이터를 추가하기 위해서도 사용된다.
+
+```js
+window.monkey = 'Tamarin';
+
+const el = documnet.getElementById('colobus');
+el.home = 'tree';
+```
+
+- 내장 기능의 프로토타입에도 속성을 추가할 수 있지만, 이상한 결과를 보일 때가 있다.
+
+```js
+RegExp.prototype.monkey = 'Capuchin'
+/123/.monkey // "capuchin"
+```
+
+- 객체에 임의의 속성을 추가하는 것은 일반적으로 좋은 설계가 아니다.
+  - window 또는 DOM 노드에 데이터를 추가하면 전역 변수가 된다.
+  - 전역 변수를 사용하면 의존성을 만들고 함수를 호출할 때마다 side effect를 고려해야한다.
+
+<br />
+
+- 타입스크립트에서는 특히, 타입 체커 `Document`와 `HTMLElement`의 임의로 추가한 속성에 대해서 알지 못한다.
+- `any`단언문을 사용해서 해결할 수 있지만, 타입 안전성을 상실하고, 언어 서비스를 사용할 수 없게 된다.
+
+```ts
+(document as any).monkey = 'Tamarin'; // 정상, 오타
+(document as any).monkey = /Tamarin/; // 정상, 잘못된 기입
+```
+
+**해결책**
+
+1. `document` 또는 DOM으로부터 데이터를 분리한다.
+2. `interface`의 특수 기능 중 하나인 보강(augmentation)을 사용한다.
+
+```ts
+interface Document {
+  /** 몽키 패치의 속(genus) 또는 종(species) */
+  monkey: string;
+}
+
+document.monkey = 'Tamarin'; // 정상상
+```
+
+- 모듈의 관점에서, 제대로 동작하게 하려면 `global` 선언을 추가해야 한다.
+
+```ts
+export {};
+declare global {
+  interface Document {
+    /** 몽키 패치의 속(genus) 또는 종(species) */
+    monkey: string;
+  }
+}
+
+document.monkey = 'Tamarin'; // 정상
+```
+
+3. 더 구체적인 타입 단언문을 사용한다.
+
+```ts
+interface MonkeyDocument extends Document {
+  /** 몽키 패치의 속(genus) 또는 종(species) */
+  monkey: string;
+}
+(document as MonkeyDocument).monkey = 'Macaque';
+```
+
+**몽키 패치를 남용해서는 안 되며 궁극적으로 더 잘 설계된 구조로 리팩터링하는 것이 좋다.**
