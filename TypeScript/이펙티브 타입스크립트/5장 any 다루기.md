@@ -248,7 +248,7 @@ interface Document {
   monkey: string;
 }
 
-document.monkey = 'Tamarin'; // 정상상
+document.monkey = 'Tamarin'; // 정상
 ```
 
 - 모듈의 관점에서, 제대로 동작하게 하려면 `global` 선언을 추가해야 한다.
@@ -329,5 +329,5 @@ const pt2 = someMethod(pt1, someSymbol); // 정상, pt2의 type이 any
 
 4. `any` 타입이 사용되는 코드가 실제로는 더 이상 실행되지 않는 코드일 때
 
-- `npm`의 `type-cover-age` 패키지를 활용해서 `any`를 추적해라
+- `npm`의 `type-coverage` 패키지를 활용해서 `any`를 추적해라
 - 타입 커버리지를 추적하면 이러한 부분들을 쉽게 발견할 수 있다.
