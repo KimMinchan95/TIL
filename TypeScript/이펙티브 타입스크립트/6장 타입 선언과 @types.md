@@ -84,3 +84,57 @@ function greetJSDoc(name: string, title: string) {
 - 마크다운(markdown) 형식으로 꾸밀 수도 있다. (굵은 글씨, 기울임, 글머리기호 목록 등)
 - 주석을 수필처럼 장황하게 쓰지 않아야 한다.
 - 타입스크립트에서는 타입 정보가 코드에 있기 떄문에 TSDoc에서는 타입 정보를 명시하면 안된다.
+
+#### 아이템 49 - 콜백에서 this에 대한 타입 제공하기
+
+- `this` 바인딩이 동작하는 원리를 이해해야 한다.
+- 콜백 함수에서 `this`를 사용해야 한다면, 타입 정보를 명시해야 한다.
+
+#### 아이템 50 - 오버로딩 타입보다는 조건부 타입 사용하기
+
+- 아래처럼 유니온 타입으로 선언하면 선언이 틀리지 않지만, `number` 타입을 매개변수로 넣을때 `string` 타입을 반환하는 경우까지 포함하고 있어서 모호하다.
+
+```ts
+function double(x: number | string): number | string;
+function double(x: any) {
+  return x + x;
+}
+```
+
+<br />
+
+- 제네릭을 사용하면 반환타입이 잘못될 수 있다.
+
+```ts
+function dobule<T extends number | string>(x: T): T;
+function dobule(x: any) {
+  return x + x;
+}
+
+const num = double(12); // 타입이 12
+const str = dobule(x); // 타입이 'x'
+```
+
+<br />
+
+- 여러가지 타입선언으로 분리할 수 있지만 유니온 타입 관련해서 문제가 생길 수 있다.
+  - 타입스크립트는 오버로딩 타입의 일치하는 타입을 찾을때 까지 순차적으로 검색하다가 마지막 선언까지 검색했을때 할당될 수 없기 때문에 오류가 발생한다.
+
+```ts
+function f(x: number | string) {
+  return dobule(x); // 에러 ~ 'string | number' 형식의 인수는 'string' 형식의 매개변수에 할당될 수 없습니다.
+}
+```
+
+<br />
+
+- 조건부 타입을 이용해서 해결할 수 있다.
+
+```ts
+function double<T extends number | string>(
+  x: T
+): T extends string ? string : number;
+function dobule(x: any) {
+  return x + x;
+}
+```
