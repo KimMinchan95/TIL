@@ -138,3 +138,31 @@ function dobule(x: any) {
   return x + x;
 }
 ```
+
+#### 아이템 51 - 의존성 분리를 위해 미러 타입 사용하기
+
+- 작성중인 라이브러리가 의존하는 라이브러리와 무관하게 타입에만 의존하면, 필요한 선언부만 추출해서 작성중에 라이브러리에 넣어라 (미러링)
+
+<br />
+
+**예시) CSV 파일을 파싱하는 라이브러리**
+
+```ts
+function parseCSV(contents: string | Buffer): { [column: string]: string }[] {
+  if (typeof contents === 'object') {
+    // 버퍼인 경우
+    return parseCSV(contents.toString('utf8'));
+  }
+  // ...
+}
+```
+
+- NodeJS 사용자를 위해 Buffer 타입을 허용했을때 Buffer의 타입정의는 NodeJS 타입 선언을 설치해서 얻을 수 있다.
+  - 하지만 `@types`와 무관한 JS 개발자와 `NodeJS`와 무관한 타입스크립트 웹 개발자들은 사용하지 않는 모듈을 불필요하게 설치해야 한다.
+  - 이런 경우에 필요한 메서드와 속성만 별도로 가져와서 정의하는 것이 좋다.
+
+```ts
+interface CsvBuffer {
+  toString(encoding: string): string;
+}
+```
