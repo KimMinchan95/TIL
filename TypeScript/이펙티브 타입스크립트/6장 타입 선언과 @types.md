@@ -166,3 +166,80 @@ interface CsvBuffer {
   toString(encoding: string): string;
 }
 ```
+
+#### 아이템 52 - 테스팅 타입의 함정에 주의하기
+
+- 테스트 코드를 작성할 때 `dtslint` 또는 타입 시스템 외부에서 타입을 검사하는 도구를 사용하는 것이 안전하다.
+
+<br />
+
+- 'square' 라는 함수의 런타임 동작을 테스트할 때 다음 같은 테스트 코드를 작성할 수 있다.
+  - 하지만 이 테스트 코드는 반환값을 체크하지 않는다.
+
+```ts
+test('square a numbr', () => {
+  square(1);
+  square(2);
+});
+```
+
+<br />
+
+- 반환값을 특정 타입의 변수에 할당해서 반환 타입을 체크할 수 있다.
+
+```ts
+// JS에 배열 메서드 map이 아닌 직접 구현한 map 함수
+const lengths: number[] = map(['john', 'paul'], (name) => name.length);
+```
+
+**반환값 할당의 문제 두 가지**
+
+1. 이 방법은 불필요한 변수를 만들어서 "미사용 변수 경고" 린팅 규칙을 비활성화해야 한다.
+
+- 해결 방법은 핼퍼 함수를 정의하는 것이다.
+
+```ts
+function assertType<T>(x: T) {}
+
+assetType<number[]>(map(['john', 'paul'], (name) => name.length));
+```
+
+<br />
+
+2. 두 타입이 동일한지 체크하는 것이 아니라 할당 가능성 체크만 한다.
+
+- 객체 타입을 체크하는 경우에 문제가 발생한다.
+
+```ts
+const beatles = ['john', 'paul', 'george', 'ringo'];
+assertType<{ name: string }[]>(
+  map(beatles, (name) => ({
+    name,
+    inYellowSubmarine: name === 'ringo',
+  }))
+); // OK
+```
+
+- `isYellowSubmarine` 속성에 대한 체크가 되지 않았다.
+
+<br />
+
+- 매개 변수가 더 적은 함수를 할당할 때도 테스팅에 문제가 일어날 수 있다.
+
+```ts
+const double = (x: number) => 2 * x;
+assertType<(a: number, b: number) => number>(dobule);
+```
+
+- 제대로 된 assertType 사용방법은 `Parameters`와 `ReturnType` 제네릭 타입을 이용해 매개변수 타입과 반환 타입만 분리해서 테스트 하는 것이다.
+  - null! - 초기값은 null을 주만 null이 아니라고 가정(?) - not null assertion (JAVA로 치면 Lazy Initialization)
+
+```ts
+const double = (x: number) => 2 * x;
+let p: Parameters<typeof double> = null!; // Type이 [x: number]
+assertType<[number, number]>(p);
+//                           ~ Argument of type '[number]' is not
+//                             assignable to parameter of type [number, number]
+let r: ReturnType<typeof double> = null!; // Type이 number
+assertType<number>(r); // OK
+```
