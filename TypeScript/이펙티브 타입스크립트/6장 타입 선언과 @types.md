@@ -232,7 +232,7 @@ assertType<(a: number, b: number) => number>(dobule);
 ```
 
 - 제대로 된 assertType 사용방법은 `Parameters`와 `ReturnType` 제네릭 타입을 이용해 매개변수 타입과 반환 타입만 분리해서 테스트 하는 것이다.
-  - null! - 초기값은 null을 주만 null이 아니라고 가정(?) - not null assertion (JAVA로 치면 Lazy Initialization)
+  - null! - 초기값은 null을 주어지지만 null이 아니라고 가정(?) - Non-null assertion (JAVA로 치면 Lazy Initialization)
 
 ```ts
 const double = (x: number) => 2 * x;
