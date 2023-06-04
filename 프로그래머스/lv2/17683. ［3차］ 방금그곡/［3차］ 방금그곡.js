@@ -12,8 +12,6 @@ const getAnswer = (music, m) => {
             return false;
         }
     }
-
-    if (music[idx + m.length] === '#') return false;
     
     return true;
 };
