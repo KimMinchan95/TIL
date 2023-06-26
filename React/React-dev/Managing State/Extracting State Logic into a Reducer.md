@@ -78,7 +78,7 @@ const [state, dispatch] = useReducer(yourReducer, initialState);
 - **reducer는 순수해야 한다.**
   - `state` 업데이트 함수와 비슷하게, reducer는 렌더링 중에 동작한다. (action은 다음 렌더링까지 큐에 들어가 있다.)
   - 이것은 reducer는 순수해야한다는 것을 의미한다.
-  - `timeourt` 요청이나 사이드 이펙트 등을 요청으로 보내면 안된다.
+  - `timeout` 요청이나 사이드 이펙트 등을 요청으로 보내면 안된다.
   - 객체나 배열을 직접 변경해서는 안된다.
 - **각 action은 여러번 데이터를 변경해도 단일 상호 작용을 설명해야한다.**
   - 예를들어, 사용자 관리에서 5개의 필드가 있는 상황에서 "Reset"버튼을 누르면 5번의 개별 "set"보다 한번의 "reset" 작업을 발송해야 한다.
