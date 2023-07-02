@@ -13,11 +13,12 @@ function solution(rows, columns, queries) {
         
         acc.push(Math.min(...arr));
         arr.unshift(arr.pop());
+        arr.reverse();
         
-        for (let i = x1; i < x2; i++) cube[y1][i] = arr.shift();
-        for (let i = y1; i < y2; i++) cube[i][x2] = arr.shift();
-        for (let i = x2; i > x1; i--) cube[y2][i] = arr.shift();
-        for (let i = y2; i > y1; i--) cube[i][x1] = arr.shift();
+        for (let i = x1; i < x2; i++) cube[y1][i] = arr.pop();
+        for (let i = y1; i < y2; i++) cube[i][x2] = arr.pop();
+        for (let i = x2; i > x1; i--) cube[y2][i] = arr.pop();
+        for (let i = y2; i > y1; i--) cube[i][x1] = arr.pop();
             
         return acc;
     }, []);
