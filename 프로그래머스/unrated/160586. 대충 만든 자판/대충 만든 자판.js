@@ -15,11 +15,8 @@ function solution(keymap, targets) {
         for (let i = 0; i < target.length; i++) {
             const cur = target[i];
             result += keyMap.get(cur);
-            if (!keyMap.get(cur)) {
-                result = null;
-                break;
-            };
+            if (!keyMap.get(cur)) return -1;
         }
-        return result ?? -1;
+        return result;
     });
 }
