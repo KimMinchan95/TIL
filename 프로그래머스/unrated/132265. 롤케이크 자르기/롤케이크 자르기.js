@@ -10,15 +10,17 @@ function solution(topping) {
     }, new Map());
 
     
-    topping.forEach(cur => {
+    for(let i = 0; i < topping.length; i++) {
+        const cur = topping[i];
+        
         map2.get(cur) === 1 ? map2.delete(cur) : map2.set(cur, map2.get(cur) - 1);
         
         map1.get(cur) ? map1.set(cur, map1.get(cur) + 1) : map1.set(cur, 1);
         
         if (map1.size === map2.size) answer++;
         
-        if (map1.size > map2.size) return;
-    });
+        if (map1.size > map2.size) break;   
+    }
     
     return answer;
 }
