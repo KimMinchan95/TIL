@@ -9,11 +9,11 @@ function solution(storey) {
             return;
         }
         
-        let res = num % 10;
+        const rest = num % 10;
         
-        dfs(Math.floor(num / 10), count + res);
+        dfs(Math.floor(num / 10), count + rest);
         
-        dfs(Math.floor(num / 10) + 1, count + 10 - res);
+        dfs(Math.floor(num / 10) + 1, count + 10 - rest);
     };
     
     dfs(storey, 0)
