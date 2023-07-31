@@ -10,7 +10,7 @@ function solution(s, skip, index) {
         while (last) {
             idx++;
             if (idx === 26) idx = 0;
-            if(skip.includes(ALPHABET_LIST[idx])) continue;
+            if (skip.includes(ALPHABET_LIST[idx])) continue;
             last--;
         }
         result += ALPHABET_LIST[idx];
