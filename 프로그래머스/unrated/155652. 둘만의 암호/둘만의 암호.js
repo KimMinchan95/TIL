@@ -1,10 +1,7 @@
 const ALPHABET_LIST = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 function solution(s, skip, index) {
-    let result = '';
-    
-    for (let i = 0; i < s.length; i++) {
-        const str = s[i];
+    return [...s].map(str => {
         let idx = ALPHABET_LIST.findIndex(cur => cur === str);
         let last = index;
         while (last) {
@@ -13,8 +10,6 @@ function solution(s, skip, index) {
             if (skip.includes(ALPHABET_LIST[idx])) continue;
             last--;
         }
-        result += ALPHABET_LIST[idx];
-    }
-    
-    return result;
+        return ALPHABET_LIST[idx];
+    }).join('');
 }
