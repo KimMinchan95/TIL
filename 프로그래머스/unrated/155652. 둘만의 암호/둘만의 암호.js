@@ -6,7 +6,7 @@ function solution(s, skip, index) {
         let last = index;
         while (last) {
             idx++;
-            if (idx === 26) idx = 0;
+            idx %= 26;
             if (skip.includes(ALPHABET_LIST[idx])) continue;
             last--;
         }
