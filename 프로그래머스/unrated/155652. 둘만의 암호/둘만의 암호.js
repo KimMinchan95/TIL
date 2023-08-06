@@ -1,15 +1,21 @@
-const ALPHABET_LIST = 'abcdefghijklmnopqrstuvwxyz'.split('');
-
 function solution(s, skip, index) {
-    return [...s].map(str => {
-        let idx = ALPHABET_LIST.findIndex(cur => cur === str);
-        let last = index;
-        while (last) {
-            idx++;
-            idx %= 26;
-            if (skip.includes(ALPHABET_LIST[idx])) continue;
-            last--;
+    const ALPAHBET = 'abcdefghijklmnopqrstuvwxyz';
+    const result = [];
+    for(let i = 0; i < s.length; i++){
+        const answer = [];
+        const findIndex = ALPAHBET.indexOf(s[i]);
+        const num = index;
+        for(let j = findIndex + 1; j <= ALPAHBET.length; j++) {
+            if(j === 26) j = 0;
+
+            if(num === answer.length) break;
+
+            if(skip.includes(ALPAHBET[j])) continue;
+
+            answer.push(ALPAHBET[j]);
         }
-        return ALPHABET_LIST[idx];
-    }).join('');
+                    console.log(answer)
+        result.push(answer.pop());
+    }
+    return result.join("");
 }
