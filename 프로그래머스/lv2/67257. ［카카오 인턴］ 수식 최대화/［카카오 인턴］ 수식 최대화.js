@@ -1,43 +1,41 @@
-const calculate = (first, second, oper) => {
-    switch (oper) {
-        case '-':
-            return first - second;
+const calculate = (first, operation, second) => {
+    switch (operation) {
         case '+':
             return first + second;
+        case '-':
+            return first - second;
         case '*':
             return first * second;
     }
-} 
+}
 
-const OPERATIONS = [
+const OPERATION_ORDERS = [
     ['-', '+', '*'],
     ['+', '-', '*'],
     ['-', '*', '+'],
     ['+', '*', '-'],
-    ['*', '+', '-'],
     ['*', '-', '+'],
-];
-
+    ['*', '+', '-'],
+]
 
 function solution(expression) {
     let result = Number.MIN_SAFE_INTEGER;
-     
-    OPERATIONS.forEach(operation => {
-        const operands = expression.match(/[0-9]+/g).map(Number);
-        const operators = expression.match(/[\*\+\-]/g);
+    
+    OPERATION_ORDERS.forEach(operationOrder => {
+        let numberList = expression.match(/\d+/g).map(Number);
+        let operationList = expression.match(/[\+\-\*]/g);
         
-        operation.forEach(cur => {
-            let idx = operators.indexOf(cur);
-            while(idx !== -1) {
-                operands[idx] = calculate(operands[idx], operands[idx + 1], cur);
-                operands.splice(idx + 1, 1);
-                operators.splice(idx, 1);
-                idx = operators.indexOf(cur);
+        operationOrder.forEach(operation => {
+            let idx = operationList.indexOf(operation);
+            
+            while (idx !== -1) {
+                numberList[idx] = calculate(numberList[idx], operation, numberList[idx + 1]);
+                numberList.splice(idx + 1, 1);
+                operationList.splice(idx, 1);
+                idx = operationList.indexOf(operation);
             }
         });
-        
-        const curResult = Math.abs(operands[0])
-        if (result <  curResult) result = curResult;
+        if (result < Math.abs(numberList[0])) result = Math.abs(numberList[0]);
     });
     
     return result;
