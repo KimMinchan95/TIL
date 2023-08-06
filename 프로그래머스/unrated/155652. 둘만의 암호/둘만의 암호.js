@@ -1,8 +1,8 @@
-const ALPHABET_LIST = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const ALPHABET_LIST = 'abcdefghijklmnopqrstuvwxyz';
 
 function solution(s, skip, index) {
     return [...s].map(str => {
-        let idx = ALPHABET_LIST.findIndex(cur => cur === str);
+        let idx = ALPHABET_LIST.indexOf(str);
         let last = index;
         while (last) {
             idx++;
