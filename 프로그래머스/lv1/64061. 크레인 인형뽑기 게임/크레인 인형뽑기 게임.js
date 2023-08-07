@@ -5,7 +5,7 @@ function solution(board, moves) {
     moves.forEach(move => {
         move -= 1;
         
-        for (let i = 0; i < board[0].length; i++) {
+        for (let i = 0; i < board.length; i++) {
             const curDoll = board[i][move];
             if (!!curDoll) {
                 if (stack[stack.length - 1] === curDoll) {
