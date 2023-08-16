@@ -19,13 +19,9 @@ function solution(X, Y) {
         }
     }
     
-    if (!resultArr.length) {
-        return '-1';
-    }
+    if (!resultArr.length) return '-1';
     
-    if (resultArr.every(str => str === '0')) {
-        return '0';
-    }
+    if (resultArr.every(str => str === '0')) return '0';
     
     return resultArr.map(Number).sort((a, b) => b - a).join('');
 }
