@@ -23,5 +23,5 @@ function solution(X, Y) {
     
     if (resultArr.every(str => str === '0')) return '0';
     
-    return resultArr.map(Number).sort((a, b) => b - a).join('');
+    return resultArr.sort((a, b) => b - a).join('');
 }
