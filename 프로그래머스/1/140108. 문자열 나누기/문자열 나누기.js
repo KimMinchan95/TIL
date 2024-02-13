@@ -18,9 +18,7 @@ function solution(s) {
             result++;
             memo = null;
         }
-        
-        if ((i === s.length - 1) && !!memo) result++;
     }
     
-    return result;
+    return result + !!memo;
 }
