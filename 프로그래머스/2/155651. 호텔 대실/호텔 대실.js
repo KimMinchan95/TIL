@@ -38,7 +38,5 @@ function solution(book_time) {
         room[outTime] = 1;   
     }
     
-    console.log(room)
-    
     return Object.values(room).reduce((acc, cur) => acc + cur, 0);
 }
