@@ -34,13 +34,14 @@ const answer = () => {
 
   if (num === 1) return '';
 
-  for (let i = 2; i <= num; i++) {
+  for (let i = 2; i <= Math.sqrt(num); i++) {
     while (!(num % i)) {
       arr.push(i);
       num /= i;
     }
-    if (num === 0) break;
   }
+
+  if (num > 1) arr.push(num);
 
   return arr.join('\n');
 };
