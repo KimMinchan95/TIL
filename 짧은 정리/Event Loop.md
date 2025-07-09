@@ -26,7 +26,7 @@ Event Loop는 JavaScript의 비동기 처리 메커니즘으로, 싱글 스레�
 
 ## Event Loop 동작 과정
 
-### 1단계: Call Stack 확인
+### 1단계: 동기 코드 실행 (Call Stack)
 
 ```javascript
 console.log("1");
@@ -35,37 +35,66 @@ console.log("3");
 // 출력: 1, 3, 2
 ```
 
-### 2단계: Web APIs로 비동기 작업 위임
+**과정:**
+
+- `console.log("1")` → Call Stack에 추가 → 실행 → Call Stack에서 제거
+- `setTimeout()` → Call Stack에 추가 → Web APIs로 위임 → Call Stack에서 제거
+- `console.log("3")` → Call Stack에 추가 → 실행 → Call Stack에서 제거
+
+### 2단계: 비동기 작업 처리 (Web APIs)
 
 ```javascript
 setTimeout(() => {
   console.log("비동기 작업 완료");
 }, 1000);
-// 1초 후 Callback Queue로 이동
 ```
 
-### 3단계: Callback Queue 대기
+**과정:**
 
-- 비동기 작업 완료 후 콜백 함수가 대기
-- FIFO (First In, First Out) 구조
+- `setTimeout`이 Web APIs로 위임됨
+- 타이머가 백그라운드에서 실행
+- 지정된 시간(1000ms) 후 콜백 함수가 Task Queue로 이동
 
-### 4단계: Event Loop가 Call Stack이 비었는지 확인
+### 3단계: Queue 대기
 
-- Call Stack이 비어있으면 Callback Queue에서 작업을 가져와 실행
-
-## Microtask Queue vs Task Queue
-
-### Microtask Queue (우선순위 높음)
+**Microtask Queue (우선순위 높음):**
 
 - Promise의 `.then()`, `.catch()`, `.finally()`
 - `queueMicrotask()`
 - `process.nextTick()` (Node.js)
 
-### Task Queue (Macrotask Queue)
+**Macrotask Queue (Task Queue):**
 
-- setTimeout, setInterval
-- setImmediate (Node.js)
-- requestAnimationFrame (브라우저)
+- `setTimeout`, `setInterval` 콜백
+- DOM 이벤트 콜백 (click, scroll 등)
+- AJAX 응답 콜백
+- `setImmediate()` (Node.js)
+- `requestAnimationFrame()` (브라우저)
+
+### 4단계: Event Loop 검사 및 실행
+
+**Event Loop의 무한 루프:**
+
+1. **Call Stack 확인**: 현재 실행 중인 코드가 있는지 확인
+2. **Microtask Queue 처리**:
+   - Microtask가 있으면 Call Stack으로 이동하여 실행
+   - Microtask Queue가 완전히 비워질 때까지 반복
+3. **Macrotask Queue 처리**:
+   - Macrotask가 있으면 하나만 Call Stack으로 이동하여 실행
+   - Macrotask 실행 후 다시 1단계로 돌아가서 Microtask Queue 확인
+4. **무한 반복**: 위 과정을 계속 반복
+
+**실행 우선순위:**
+
+1. **동기 코드** (Call Stack)
+2. **Microtask Queue** (모든 Microtask를 한 번에 처리)
+3. **Macrotask Queue** (한 번에 하나씩만 처리)
+
+**핵심 포인트:**
+
+- Microtask Queue는 **한 번에 모두 비움** (모든 Promise 처리)
+- Macrotask Queue는 **한 번에 하나씩만** 처리
+- Macrotask 실행 후 다시 Microtask Queue 확인
 
 ## 실행 순서 예제
 
