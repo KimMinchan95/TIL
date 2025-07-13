@@ -11,7 +11,7 @@ function solution(bandage, health, attacks) {
         
         curHealth -= damage;
         
-        if (curHealth < 0) arr.splice(1);
+        if (curHealth < 0) arr.splice(0);
         
         return [curHealth, attackTime];
     }, [health, 0]);
