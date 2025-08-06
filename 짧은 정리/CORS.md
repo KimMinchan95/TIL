@@ -23,8 +23,9 @@ CORS는 웹 브라우저에서 실행되는 JavaScript가 다른 출처(Origin)�
 ### 단순 요청 (Simple Request)
 
 - GET, POST, HEAD 메서드
-- 기본 헤더만 사용
-- Content-Type이 특정 값들
+- 기본 헤더만 사용 (Accept, Accept-Language, Content-Language, Content-Type 등)
+- 커스텀 헤더 없음
+- Content-Type이 다음 중 하나: `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`
 - 사전 요청(Preflight) 없이 바로 요청
 
 ### 사전 요청 (Preflight Request)
@@ -37,7 +38,7 @@ CORS는 웹 브라우저에서 실행되는 JavaScript가 다른 출처(Origin)�
 
 - 쿠키, 인증 헤더 포함 요청
 - `withCredentials: true` 설정 필요
-- 서버에서도 특별한 설정 필요
+- 서버에서 `Access-Control-Allow-Credentials: true` 설정 필요
 
 ## CORS 헤더
 
@@ -89,7 +90,7 @@ CORS는 웹 브라우저에서 실행되는 JavaScript가 다른 출처(Origin)�
 
 - 악의적인 사이트의 리소스 접근 차단
 - 사용자 정보 보호
-- CSRF 공격 방지
+- 동일 출처 정책을 통한 기본적인 보안 강화
 
 ### 주의사항
 
@@ -123,7 +124,7 @@ CORS는 웹 브라우저에서 실행되는 JavaScript가 다른 출처(Origin)�
 ### CSRF (Cross-Site Request Forgery)
 
 - **정의**: 사용자가 의도하지 않은 요청을 다른 사이트에서 대신 보내는 공격
-- **CORS와의 관계**: CORS 정책이 CSRF 공격을 어느 정도 방지하지만, 완전한 방어는 아님
+- **CORS와의 관계**: CORS는 CSRF 공격을 방지하지 않음. CSRF는 같은 출처에서도 발생 가능하며, CORS는 다른 출처의 리소스 접근만 제한
 - **예시**: 로그인된 사용자가 악성 사이트 방문 시 자동으로 계정 정보 변경 요청 발생
 - **방어 방법**: CSRF 토큰 사용, SameSite 쿠키 설정, Referer 헤더 검증
 
