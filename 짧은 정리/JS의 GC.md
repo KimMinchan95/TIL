@@ -106,7 +106,7 @@ function createHeavyClosure() {
   };
 }
 
-const closure = createHeavyClosure();
+let closure = createHeavyClosure();
 // closure가 살아있는 한 heavyData도 메모리에 유지
 
 // ✅ 해결: 필요 없을 때 참조 제거
@@ -260,3 +260,90 @@ function processData(data) {
   return result;
 }
 ```
+
+## 도달 가능성(Reachability)과 루트
+
+### 도달 가능성이란?
+- **도달 가능(Reachable)**: 루트에서 참조 그래프를 따라 도달할 수 있는 값
+- **도달 불가능(Unreachable)**: 루트에서 어떤 경로로도 도달할 수 없는 값 → GC 대상
+
+### 루트(Root)란?
+- 전역 객체(`window`, `globalThis`)
+- 현재 실행 중인 함수의 지역 변수와 매개변수
+- 콜스택에 존재하는 함수 프레임
+- 클로저로 캡처된 변수
+- Web API가 보유한 참조(타이머, 이벤트 리스너 등)
+
+### 참조 그래프와 마킹
+1. 루트에서 시작하여 참조 그래프를 순회하며 **도달 가능한 객체에 마킹**
+2. 마킹되지 않은 객체는 **쓸기(Sweep)** 단계에서 해제
+
+```javascript
+// 루트 → user → address 로 이어지는 참조
+let user = { name: "A", address: { city: "Seoul" } };
+
+// address는 user가 참조하므로 도달 가능
+user = null; // user 참조 해제 → address도 더 이상 루트에서 도달 불가 → GC 대상
+```
+
+## 순환 참조와 GC
+
+### 순환 참조는 GC를 방해하지 않는다
+- 마크-스위프 기반의 엔진(V8)은 **도달 가능성**을 기준으로 판단
+- 서로가 서로를 참조해도 루트에서 도달할 수 없으면 GC 대상
+
+```javascript
+function createCycle() {
+  const obj1 = {};
+  const obj2 = {};
+  obj1.ref = obj2;
+  obj2.ref = obj1; // 순환 참조
+  return { obj1, obj2 };
+}
+
+let pair = createCycle();
+// pair가 루트에서 유일한 진입점
+pair = null; // 루트에서 끊기면 두 객체 모두 도달 불가 → GC 대상
+```
+
+## 약한 참조와 파이널라이제이션
+
+### WeakMap / WeakSet
+- 키가 **약한 참조**로 저장됨 → 키가 다른 경로에서 도달 불가가 되면 자동 GC 대상
+- 캐시, 메모이제이션 등에서 유용
+
+```javascript
+const wm = new WeakMap();
+(function () {
+  const key = { id: 1 }; // 블록 스코프 종료 후 다른 강한 참조 없음
+  wm.set(key, { meta: "cached" });
+})();
+// key는 더 이상 도달 불가 → GC가 수거 가능 (값도 함께 제거됨)
+```
+
+### WeakRef / FinalizationRegistry
+- WeakRef: 객체를 약하게 참조하여, 존재할 수도/없을 수도 있는 값을 안전하게 다룸
+- FinalizationRegistry: 객체가 GC로 수거될 때 정리 콜백 등록
+- 주의: 타이밍이 비결정적이므로 비즈니스 로직에 의존시키지 말 것
+
+```javascript
+class Cache {
+  constructor() {
+    this.map = new Map();
+  }
+  set(id, obj) {
+    this.map.set(id, new WeakRef(obj));
+  }
+  get(id) {
+    const ref = this.map.get(id);
+    return ref ? ref.deref() ?? null : null; // 수거되었으면 null
+  }
+}
+```
+
+## 실무 체크리스트: 도달 가능성 관점
+- 전역 변수, 싱글톤에 쌓이는 참조를 주기적으로 정리
+- 타이머/인터벌/이벤트 리스너는 생명 주기에 맞춰 해제
+- 클로저가 불필요한 대용량 데이터를 캡처하지 않도록 주의
+- Map 대신 WeakMap을 고려해 캐시의 누수 방지
+- DOM 제거 시 JS 참조도 함께 정리
