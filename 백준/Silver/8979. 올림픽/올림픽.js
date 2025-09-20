@@ -53,15 +53,15 @@ const answer = () => {
 
     const isSame = JSON.stringify(info) === JSON.stringify(prevInfo);
 
-    if (!isSame) {
-      rank++;
-    }
-
-    obj[num] = rank + flag;
+    rank++;
 
     if (isSame) {
       flag++;
-    } else {
+    }
+
+    obj[num] = rank - (isSame ? flag : 0);
+
+    if (!isSame) {
       flag = 0;
     }
   }
