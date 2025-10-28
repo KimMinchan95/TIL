@@ -29,31 +29,25 @@ const answer = () => {
   const input = fileRead(TYPES.SINGLE);
 
   const [N, M] = input.split(' ').map(Number);
-  const set = new Set();
+  const result = [];
 
   const visited = Array(N + 1).fill(false);
 
-  const dfs = (depth, arr) => {
+  const dfs = (depth, arr, start) => {
     if (depth === M) {
-      set.add(arr.sort().join(' '));
+      result.push(arr.join(' '));
       return;
     }
 
-    for (let i = 1; i <= N; i++) {
+    for (let i = start; i <= N; i++) {
       if (visited[i]) continue;
       visited[i] = true;
-      dfs(depth + 1, [...arr, i]);
+      dfs(depth + 1, [...arr, i], i);
       visited[i] = false;
     }
   };
 
-  dfs(0, []);
-
-  const result = [];
-
-  for (let value of set) {
-    result.push(value);
-  }
+  dfs(0, [], 1);
 
   return result.join('\n');
 };
