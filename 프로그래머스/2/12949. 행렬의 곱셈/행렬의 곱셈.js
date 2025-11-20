@@ -1,20 +1,15 @@
 function solution(arr1, arr2) {
-    const result = [];
+    const [r1, c1] = [arr1.length, arr1[0].length];
+    const [r2, c2] = [arr2.length, arr2[0].length];
     
-    for (let line = 0; line < arr1.length; line++) {
-        const resultLine = [];
-        
-        for (let y = 0; y < arr2[0].length; y++) {
-            let sum = 0;
-            
-            for (let x = 0; x < arr2.length; x++) {
-                sum += arr1[line][x] * arr2[x][y];
+    const result = Array.from({ length: r1 }, () => new Array(c2).fill(0));
+    
+    for (let i = 0; i < r1; i++) {
+        for (let j = 0; j < c2; j++) {
+            for (let k = 0; k < c1; k++) {
+                result[i][j] += arr1[i][k] * arr2[k][j];
             }
-            
-            resultLine.push(sum);
         }
-        
-        result.push(resultLine);
     }
     
     return result;
