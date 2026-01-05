@@ -10,7 +10,7 @@ function solution(sticker) {
     for(let i = 2; i < length; i++){
         if(i !== length - 1){
             dp1[i] = Math.max(dp1[i - 1], dp1[i - 2] + sticker[i]);
-        } else{
+        } else {
             dp1[i] = dp1[i - 1];
         }
         
