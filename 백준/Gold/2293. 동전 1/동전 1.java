@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-// 메모리 초과로 java로 변경 후 제출
+// 메모리 초과로 JS로 작성 후 java로 변경 제출
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
