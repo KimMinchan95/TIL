@@ -1,0 +1,4 @@
+-- 코드를 입력하세요
+SELECT min(Datetime)
+FROM ANIMAL_INS
+WHERE DATETIME
