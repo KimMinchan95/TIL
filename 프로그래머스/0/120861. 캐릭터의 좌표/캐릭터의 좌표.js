@@ -11,11 +11,10 @@ function solution(keyinput, board) {
     
     let loc = [0, 0];
     
-    
     keyinput.forEach(key => {
         const dir = keys[key];
         const [nextX, nextY] = [loc[0] + dir[0], loc[1] + dir[1]];
-        if (nextX < -xLen || nextX > xLen || nextY < -yLen || nextY > yLen) {
+        if (xLen < Math.abs(nextX) || yLen < Math.abs(nextY)) {
             return;
         }
         loc = [nextX, nextY];
