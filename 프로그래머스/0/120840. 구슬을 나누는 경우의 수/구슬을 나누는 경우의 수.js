@@ -1,10 +1,9 @@
 function solution(balls, share) {
-    let [a, b] = [1n, 1n];
+    let answer = 1;
     
-    for (let i = 0; i < share; i++) {
-        a *= BigInt(balls - i);
-        b *= BigInt(i + 1);
+    for (let i = 1; i <= share; i++) {
+        answer = (answer * (balls - i + 1)) / i;
     }
     
-    return Number(a / b);
+    return answer;
 }
