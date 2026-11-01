@@ -1,10 +1,6 @@
 function solution(participant, completion) {
     const map = participant.reduce((acc, cur) => {
-        if (acc.has(cur)) {
-            acc.set(cur, acc.get(cur) + 1);
-        } else {
-            acc.set(cur, 1);   
-        }
+        acc.set(cur, (acc.get(cur) || 0) + 1);
         return acc;
     }, new Map());
     
@@ -17,5 +13,5 @@ function solution(participant, completion) {
         }
     });
     
-    return [...map][0][0]
+    return map.keys().next().value;
 }
