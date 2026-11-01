@@ -15,16 +15,14 @@ function solution(genres, plays) {
         acc.set(cur[0], [...acc.get(cur[0]) || [], cur[1]]);
         return acc;
     }, new Map());
+
     
-    const result = [];
-    
-    for (const key of genreSort) {
-        const genreList = genreMap.get(key);
+    return genreSort.reduce((acc, cur) => {
+        const genreList = genreMap.get(cur);
         const len = genreList.length;
         for (let i = 0; i < Math.min(len, 2); i++) {
-            result.push(genreList[i]);
+            acc.push(genreList[i]);
         }
-    }
-    
-    return result;
+        return acc;
+    }, []);
 }
