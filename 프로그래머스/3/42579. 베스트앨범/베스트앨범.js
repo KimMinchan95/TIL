@@ -19,10 +19,10 @@ function solution(genres, plays) {
     const result = [];
     
     for (const key of genreSort) {
-        const value = genreMap.get(key);
-        const len = value.length;
+        const genreList = genreMap.get(key);
+        const len = genreList.length;
         for (let i = 0; i < Math.min(len, 2); i++) {
-            result.push(value[i][0]);
+            result.push(genreList[i][0]);
         }
     }
     
