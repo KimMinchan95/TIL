@@ -12,7 +12,7 @@ function solution(genres, plays) {
     });
     
     const genreMap = sortAsPlays.reduce((acc, cur) => {
-        acc.set(cur[0], [...acc.get(cur[0]) || [], [cur[1], cur[2]]]);
+        acc.set(cur[0], [...acc.get(cur[0]) || [], cur[1]]);
         return acc;
     }, new Map());
     
@@ -22,7 +22,7 @@ function solution(genres, plays) {
         const genreList = genreMap.get(key);
         const len = genreList.length;
         for (let i = 0; i < Math.min(len, 2); i++) {
-            result.push(genreList[i][0]);
+            result.push(genreList[i]);
         }
     }
     
