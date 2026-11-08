@@ -1,22 +1,24 @@
 function solution(progresses, speeds) {
     const result = [];
+    let day = 0;
+    let work = 0;
     
-    const left = progresses.map((progress, i) => Math.ceil((100 - progress) / speeds[i]));
-    
-    let count = 0;
-    let max = left[0];
-    
-    for (let i = 0; i < left.length; i++) {
-        if (left[i] <= max) {
-            count++;
-            continue;
+    for (let i = 0; i < progresses.length; i++) {
+        const lastP = 100 - progresses[i];
+        const minD = Math.ceil(lastP / speeds[i]);
+        if (work !== 0 && minD > day) {
+            result.push(work);
+            work = 0;
         }
-        result.push(count);
-        count = 1;
-        max = left[i];
+        day = Math.max(minD, day);
+        
+        if (minD <= day) {
+            work++
+        }
     }
-    
-    result.push(count);
+    if (work) {
+        result.push(work);
+    }
     
     return result;
 }
