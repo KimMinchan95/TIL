@@ -1,21 +1,21 @@
 function solution(prices) {
-    const len = prices.length;
-    const result = new Array(len).fill(0);
+    const result = Array(prices.length).fill(0);
     
-    const stack = [0];
-    for (let i = 1; i < len; i++) {
-        while (prices[stack[stack.length - 1]] > prices[i] && !!stack.length) {
-            const idx = stack.pop();
-            result[idx] = i - idx;
+    const stack = [];
+    for (let i = 0; i < prices.length; i++) {
+        const curP = prices[i];
+        while (stack.length && prices[stack.at(-1)] > curP) {
+            const index = stack.pop();
+            result[index] = i - index; 
         }
         
-        stack.push(i)
+        stack.push(i);
     }
-    console.log(stack)
     
-    while (!!stack.length) {
-        const idx = stack.pop();
-        result[idx] = len - 1 - idx;
+    const pl = prices.length;
+    while (stack.length) {
+        const index = stack.pop();
+        result[index] = pl - 1 - index;
     }
     
     return result;
