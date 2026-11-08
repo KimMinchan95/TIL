@@ -1,20 +1,14 @@
-function solution(s){    
-    const stack = [];
+function solution(s){
+    const list = [];
     
-    [...s].forEach(cur => {
-        if (cur === '(') {
-            stack.push('(');
+    for (let i = 0; i < s.length; i++) {
+        const top = list.at(-1);
+        const cur = s[i];
+        if (top === '(' && cur === ')') {
+            list.pop();
+            continue;
         }
-        
-        if (cur === ')') {
-            if (stack[stack.length - 1] === '(') {
-                stack.pop();
-                return;
-            }
-            
-            stack.push(')');
-        }
-    });
-    
-    return !stack.length;
+        list.push(cur);
+    }
+    return !list.length;
 }
