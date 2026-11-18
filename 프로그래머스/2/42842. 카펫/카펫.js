@@ -1,12 +1,14 @@
 function solution(brown, yellow) {
-    const total = brown + yellow;
+    const max = (brown - 4) / 2;
     
-    for (let x = 3; x <= Math.sqrt(total); x++) {
-        if (total % x === 0) {
-            const y = total / x;
-            if (yellow === (x - 2) * (y - 2)) {
-                return [y, x];
-            } 
+    for (let x = 1; x < max; x++) {
+        const maxY = max - x;
+        for (let y = 1; y <= maxY; y++) {
+            if (x * y === yellow) {
+                return [y + 2, x + 2];
+            }
         }
     }
+    
+    return 'noooooooo!';
 }
