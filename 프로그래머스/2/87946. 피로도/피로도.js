@@ -1,16 +1,37 @@
-function dfs (curK, count, visited, dungeons) {
-    let max = count;
-    for (let i = 0; i < dungeons.length; i++) {
-        if (curK >= dungeons[i][0] && !visited[i]) {
-            visited[i] = true;
-            max = Math.max(max, dfs(curK - dungeons[i][1], count + 1, visited, dungeons));
-            visited[i] = false;
-        }
-    }
-    return max;
-}
-
 function solution(k, dungeons) {
-    const visited = Array(dungeons).fill(false);
-    return dfs(k, 0, visited, dungeons);
+    const set = new Set();
+    
+    const len = dungeons.length
+    
+    const mix = (pick, rest) => {
+        if (pick.length === len) {
+            set.add(pick);
+            return;
+        }
+        
+        rest.forEach((curRest, i) => {
+            const nRest = rest.filter((_, idx) => i !== idx);
+            mix([...pick, curRest], nRest);
+        });
+    }
+    
+    mix([], dungeons);
+    
+    const resultList = [];
+    for (const dunMix of set) {
+        let restK = k;
+        let score = 0;
+        for (let i = 0; i < len; i++) {
+            const [needT, t] = dunMix[i];
+            if (needT <= restK) {
+                score++;
+                restK -= t;
+                continue;
+            }
+            break;
+        }
+        resultList.push(score);
+    }
+    
+    return Math.max(...resultList);
 }
