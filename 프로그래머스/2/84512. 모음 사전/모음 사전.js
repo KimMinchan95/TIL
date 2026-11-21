@@ -6,10 +6,10 @@ function solution(word) {
     const makeDic = (pick) => {
         if (pick === word) stop = true;
         if (stop) return;
-        if (pick.length > 5) return;
         if (pick.length >= 1) count++;
         
         for (let i = 0; i < W.length; i++) {
+            if (pick.length === 5) break;
             makeDic(pick + W[i]);
         }
     }
