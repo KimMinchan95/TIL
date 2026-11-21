@@ -1,5 +1,5 @@
 function solution(word) {
-    const list = [];
+    const map = new Map();
     
     const W = ['A', 'E', 'I', 'O', 'U'];
     
@@ -7,7 +7,7 @@ function solution(word) {
     const makeDic = (pick) => {
         if (pick.length > 5) return;
         if (pick.length >= 1) {
-            list.push(pick);
+            map.set(pick, count);
             count++;
         }
         
@@ -17,5 +17,5 @@ function solution(word) {
     }
     makeDic('');
     
-    return list.findIndex(p => p === word) + 1;
+    return map.get(word);
 }
