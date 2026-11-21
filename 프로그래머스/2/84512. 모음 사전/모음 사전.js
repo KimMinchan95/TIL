@@ -1,15 +1,13 @@
 function solution(word) {
-    const map = new Map();
-    
     const W = ['A', 'E', 'I', 'O', 'U'];
     
     let count = 1;
+    let stop = false;
     const makeDic = (pick) => {
+        if (pick === word) stop = true;
+        if (stop) return;
         if (pick.length > 5) return;
-        if (pick.length >= 1) {
-            map.set(pick, count);
-            count++;
-        }
+        if (pick.length >= 1) count++;
         
         for (let i = 0; i < W.length; i++) {
             makeDic(pick + W[i]);
@@ -17,5 +15,5 @@ function solution(word) {
     }
     makeDic('');
     
-    return map.get(word);
+    return count;
 }
