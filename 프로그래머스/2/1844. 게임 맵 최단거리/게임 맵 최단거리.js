@@ -1,56 +1,28 @@
-class Queue {
-    items = [];
-    front = 0;
-    rear = 0;
-    
-    push(item) {
-        this.items.push(item);
-        this.rear++;
-    }
-    
-    pop() {
-        return this.items[this.front++];
-    
-    }
-    
-    isEmpty() {
-        return this.front === this.rear;
-    }
-}
-
-const MOVES = [[-1, 0], [1, 0], [0, -1], [0, 1]];
-
 function solution(maps) {
-    const n = maps.length;
-    const m = maps[0].length;
+    const dir = [[0, 1], [1, 0], [-1, 0], [0, -1]];
+    let result = 0;
     
-    const dist = Array.from({ length: n }, () => Array(m).fill(-1));
-    
-    function bfs(start) {
-        const queue = new Queue();
-        queue.push(start);
-        dist[start[0]][start[1]] = 1;
+    maps[0][0] = 0;
+    const mapx = maps[0].length;
+    const mapy = maps.length;
+    const queue = [[0, 0, 1]];
+    let head = 0;
+    while (head < queue.length) {
+        const [y, x, cnt] = queue[head++];
         
-        while (!queue.isEmpty()) {
-            const cur = queue.pop();
-            
-            for (const [dx, dy] of MOVES) {
-                const nx = cur[0] + dx;
-                const ny = cur[1] + dy;
-                
-                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-                
-                if (maps[nx][ny] === 0) continue;
-                
-                if (dist[nx][ny] === -1) {
-                    queue.push([nx, ny]);
-                    dist[nx][ny] = dist[cur[0]][cur[1]] + 1;
-                }
+        if (y === mapy - 1 && x === mapx - 1) {
+            return cnt;
+        }
+        
+        for (const [dy, dx] of dir) {
+            const ny = y + dy;
+            const nx = x + dx;
+            if (ny < mapy && nx < mapx && ny >= 0 && nx >= 0 && maps[ny][nx] === 1) {
+                maps[ny][nx] = 0;
+                queue.push([ny, nx, cnt + 1]);
             }
         }
     }
     
-    bfs([0, 0]);
-    
-    return dist[n - 1][m - 1];
+    return -1;
 }
